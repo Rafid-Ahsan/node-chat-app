@@ -1,9 +1,9 @@
 const express = require('express')
-
 const { getLogin } = require('../controller/loginController')
+const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse')
 
 const router = express.Router()
 
-router.get('/', getLogin) // login page
+router.get('/', decorateHtmlResponse('Login'), getLogin) // login page
 
 module.exports = router

@@ -1,9 +1,9 @@
 const express = require('express')
-
 const { getUsers } = require('../controller/userController')
+const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse')
 
 const router = express.Router()
 
-router.get('/', getUsers) // login page
+router.get('/', decorateHtmlResponse('Users') ,getUsers) // login page
 
 module.exports = router
