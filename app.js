@@ -6,10 +6,14 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 
 // internal imports
-const { notFoundHandler,errorHandler } = require('./middlewares/common/errorHandler')
+const { 
+    notFoundHandler, 
+    errorHandler 
+} = require('./middlewares/common/errorHandler')
 const loginRouter = require('./router/loginRouter')
 const usersRouter = require('./router/usersRouter')
 const inboxRouter = require('./router/inboxRouter')
+
 
 const app = express()
 dotenv.config()
@@ -19,17 +23,17 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('Database Connection Succesful'))
-.catch((error) => console.log(error))
+.then(() => console.log('Database Connection Successful'))
+.catch(err => console.log(err))
 
-// request parser
+// request parsers
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // set view engine
 app.set('view engine', 'ejs')
 
-// set static
+// set static folder
 app.use(express.static(path.join(__dirname, 'public')))
 
 // parse cookies
@@ -41,9 +45,10 @@ app.use('/users', usersRouter)
 app.use('/inbox', inboxRouter)
 
 // error handling
-app.use(notFoundHandler) // 404 Handler
-app.use(errorHandler) // common error handler
+app.use(notFoundHandler) // 404 error handler
+app.use(errorHandler) // rendering error page
 
+// listening to port
 app.listen(process.env.PORT, () => {
-    console.log(`App listening to port ${process.env.PORT}`)
+    console.log(`Listening to port ${process.env.PORT}`)
 })

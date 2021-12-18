@@ -2,20 +2,11 @@
 const express = require('express')
 
 // internal imports
-const { getUsers, addUser } = require('../controller/userController')
+const { getUsers } = require('../controller/usersController')
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse')
-const avatarUpload = require('../middlewares/users/avatarUpload')
-const { addUserValidators, addUserValidationHandler } = require('../middlewares/users/usersValidators')
 
 const router = express.Router()
 
-router.get('/', decorateHtmlResponse('Users') ,getUsers) // login page
-router.post(
-    '/',
-    avatarUpload,
-    addUserValidators,
-    addUserValidationHandler,
-    addUser
-) //add user
+router.get('/', decorateHtmlResponse('Users') , getUsers)
 
 module.exports = router
